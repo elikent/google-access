@@ -1,16 +1,18 @@
 ﻿# MINE
 # Data
-data/
-!data/.gitkeep
+**/data
+!**/data/.gitkeep
 # data_samples/# (intentionally not ignored)
 
 # Outputs
-output/
-!output/.gitkeep
+**/output/
+!**/output/.gitkeep
 artifacts/
 
 # Secrets
 /configs/secrets/
+**/secrets/
+!configs/app/*.json   # allow safe JSON configs if you use them
 
 # Test scripts
 tests/
@@ -18,8 +20,15 @@ tests/
 # INHERITED
 # Byte-compiled / optimized / DLL files
 __pycache__/
-*.py[codz]
+*.py[cod]
+*.pyo
+*.pyd
+*.so
 *$py.class
+
+# -- Logs --
+**/logs/
+*.log
 
 # Test scripts
 test*.py
@@ -100,6 +109,7 @@ target/
 
 # Jupyter Notebook
 .ipynb_checkpoints
+*.ipynb~
 
 # IPython
 profile_default/
@@ -107,6 +117,13 @@ ipython_config.py
 
 # PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
 __pypackages__/
+
+# --- IDE/editor cruft ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
 
 # Celery stuff
 celerybeat-schedule
