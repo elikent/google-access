@@ -7,6 +7,8 @@
 # Outputs
 **/output/
 !**/output/.gitkeep
+
+# Artifacts
 artifacts/
 
 # Secrets
@@ -15,7 +17,8 @@ artifacts/
 !configs/app/*.json   # allow safe JSON configs if you use them
 
 # Test scripts
-tests/
+**/tests/
+test*.py
 
 # INHERITED
 # Byte-compiled / optimized / DLL files
