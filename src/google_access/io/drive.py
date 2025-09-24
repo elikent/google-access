@@ -1,6 +1,9 @@
+import logging
 from typing import Optional, Any, List, Dict
 from googleapiclient.discovery import Resource
 from googleapiclient.errors import HttpError
+
+logger = logging.getLogger(__name__)
 
 def get_folder_items(
     service: Resource, 
@@ -44,5 +47,7 @@ def get_folder_items(
         return items
 
     except HttpError as e:
-        print(f'Drive API error: {e}')
+        msg = f'Drive API error in get_folder_items: {e}'
+        print(msg)
+        logger.error(msg)
         return []
