@@ -4,6 +4,21 @@ from pathlib import Path
 from typing import Optional
 
 
+
+def report(msg: str, log_level: str = "info", *, verbose: bool = False, logger: logging.Logger | None = None) -> None:
+    '''Log and optionally print'''
+    _map = {
+        "info": logging.info,
+        "warning": logging.warning,
+        "error": logging.error,
+        "critical": logging.critical,
+        "debug": logging.debug,
+    }
+    log_fn = _map.get(log_level.lower(), logging.info)
+    log_fn(msg)
+    if verbose or log_level != "info":
+        print(msg)
+
 def logging_config(
         level: int = logging.INFO, 
         fmt: str = "%(asctime)s [%(levelname)s] %(name)s: %(message)s",
