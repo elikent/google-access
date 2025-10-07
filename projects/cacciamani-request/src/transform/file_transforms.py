@@ -6,7 +6,7 @@ from PyPDF2.errors import PdfReadError
 
 from google_access.utils.log_utils import report
 
-# to do: change reporting() -> report() and make changes suggested by coach
+# to do: change report() -> report() and make changes suggested by coach
 
 logger = logging.getLogger(__name__)
 
@@ -61,11 +61,11 @@ def combine_pdfs(
             pdfs.append(p)
         elif p.is_file() and p.suffix.lower() != '.pdf':
             msg = f'{p} is not a pdf file. removed from pdf list'
-            reporting(msg, 'warning') 
-        elif p.is_dir():    # if p is a directory, gather files in that directory 
+            report(msg, 'warning')
+        elif p.is_dir():    # if p is a directory, gather files in that directory
             if patterns:    # if patterns, gather only that match any of the patterns
                 for pat in patterns:
-                    pdfs.extend(p.glob(pat)) 
+                    pdfs.extend(p.glob(pat))
             else:
                 it = p.glob("*.pdf")
                 pdfs.extend(it)
@@ -73,14 +73,14 @@ def combine_pdfs(
             # silently skip non-existent
             continue
     msg = f'{len(pdfs)} pdfs found'
-    reporting(msg)
+    report(msg)
 
     # Deduplicate & keep only files
     uniq = []
     seen = set()
     for f in pdfs:
         try:
-            fp = f.resolve()    
+            fp = f.resolve()
         except Exception:
             continue
         if fp.is_file() and fp not in seen:
@@ -88,15 +88,15 @@ def combine_pdfs(
             seen.add(fp)
     uniq_count1 = len(uniq)
     msg = f'{uniq_count1} unique pdfs found'
-    reporting(msg)
+    report(msg)
 
     # Apply predicate filter if provided
     if match:
         uniq = [p for p in uniq if match(p)]
         msg1 = f'{len(uniq)} pdfs after predicate filter'
         msg2 = f'{uniq_count1 - len(uniq)} pdfs removed by predicate filter'
-        reporting(msg1)
-        reporting(msg2)
+        report(msg1)
+        report(msg2)
 
     # Sort
     if sort_key is None:
@@ -104,7 +104,7 @@ def combine_pdfs(
     else:
         uniq.sort(key=sort_key)
     msg = f'pdfs sorted by {sort_key if sort_key else "name"}'
-    reporting(msg)
+    report(msg)
 
     # Dry run?
     if dry_run:
@@ -121,17 +121,17 @@ def combine_pdfs(
                 merger.append(str(pdf))
             except (FileNotFoundError, PermissionError, PdfReadError) as e:
                 msg = f'Failed to append {pdf}: {e}'
-                reporting(msg, 'error')
+                report(msg, 'error')
                 continue
 
         output_file.parent.mkdir(parents=True, exist_ok=True)
         try:
             merger.write(str(output_file))
             msg = f'wrote {len(merger)} to {output_file}'
-            reporting(msg)
+            report(msg)
         except PermissionError as e:
             msg = f'Failed to write {output_file}: {e}'
-            reporting(msg, 'critical')
+            report(msg, 'critical')
             raise
 
     finally:
@@ -155,7 +155,8 @@ def remove_pages(input_pdf: Path, output_pdf: Path, pages_to_remove: list[int]) 
         else:
             bad.append(p)
     if bad:
-        print_verbose(f"Warning: pages out of range and skipped: {bad}")
+        msg = f"Warning: pages out of range and skipped: {bad}"
+        report(msg, "warning")
 
     for i, page in enumerate(reader.pages):
         if i not in zero_based:
@@ -166,8 +167,9 @@ def remove_pages(input_pdf: Path, output_pdf: Path, pages_to_remove: list[int]) 
         writer.write(f)
 
 # usage: remove page 27
-remove_pages(
+'''remove_pages(
     input_pdf=Path("projects/cacciamani_request/data/raw/pdfs/source.pdf"),
     output_pdf=Path("projects/cacciamani_request/data/processed/source_no_p27.pdf"),
     pages_to_remove=[27],
 )
+'''
