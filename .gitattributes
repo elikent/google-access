@@ -2,26 +2,13 @@
 
 # --- Line endings ---
 # Ensure all text files use LF in the repo, CRLF will be converted on Windows checkout
-* text=auto eol=lf
+* text eol=lf
 
-# Explicit rules for common text files
-*.py text eol=lf
-*.txt text eol=lf
-*.md  text eol=lf
-*.toml text eol=lf
-*.yml text eol=lf
-*.yaml text eol=lf
-*.json text eol=lf
-*.csv text eol=lf
-*.ini text eol=lf
-*.cfg text eol=lf
-*.html text eol=lf
-*.css text eol=lf
-*.js text eol=lf
-
-# --- Python-specific ignores ---
-# Jupyter notebooks are JSON, force LF
+# Jupyter notebooks and binary data
 *.ipynb text eol=lf
+*.parquet binary
+*.feather binary
+*.xlsx binary
 
 # Git should not attempt line ending conversion or diffs
 *.png binary
