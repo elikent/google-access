@@ -1,6 +1,6 @@
 # CODEMAP – google-access
-_Quick function-level inventory_  
-_Updated: 2025-10-07_
+_Quick function-level inventory_
+_Updated: 2025-10-08_
 
 ---
 
@@ -13,88 +13,53 @@ _Updated: 2025-10-07_
 | **Projects linked** | 1 | `cacciamani-request` |
 ---
 
-## 📂 Source Structure and Function Inventory
+src/google_access
+ ingest/                    # task-level pulls that call io/ and return clean in-memory objects (e.g. DataFrames)
+    sheets.py
+    [ ] get_google_sheets   # downloads data from table or tab in google sheets as a csv
 
- io/
-   auth.py – get into google drive
-    [x] authenticate – authenticate google service account with SCOPES
-    [x] build_service – build service
+ io/                        # API adapters (Google-only side effects)
+   auth.py                  # get into google drive
+    [x] authenticate        # authenticate google service account with SCOPES
+    [x] build_service       # build service
 
-   drive.py – navigate in drive
-    [x] get_folder_items – returns a list of dicts of folder_item: metadata
+   drive.py                 # navigate in drive
+    [x] get_folder_items    # returns a list of dicts of folder_item: metadata
 
- transform/
-    (placeholder – to be implemented)
+ transform/                 # pure transforms (no I/O)
+    file_transforms.py
+    [x] combine_pdfs        # combine multiple pdfs into one
+    [x] remove_pages        # remove pages from pdf
+    [ ] convert_jpg_to_pdf  # convert jpg to pdf
 
- utils/
-  constants.py
-    [x] SCOPES : list
-    [x] MIME_TYPES : dict
-
-  log_utils.py
-    [x] report – report with message and level, optionally print
-    [x] logging_config – configure global logging for app
+ utils/                     # helper functions
+   log_utils.py
+    [x] report              # report with message and level, optionally print
+    [x] logging_config      # configure global logging for app
 
   text_utils.py
     [x] remove_diacritics
-    [x] cannon – canonicalize a filename or text string for matching
+    [x] cannon              # canonicalize a filename or text string for matching
 
+constants.py                # common constants
+  [x] SCOPES : list
+  [x] MIME_TYPES : dict
 
- src/
-  google-access/
-     ingest/
-      ingest.py
-        [] download_item - download item
-
-     io/
-       auth.py - get into google drive
-        [x] authenticate - authenticate google service account with SCOPES 
-        [x] build_service - build service
-
-      drive.py - navigate in drive
-        [x] get_folder_items - returns a list of dicts of folder_item: metadata
-
-     transform/
-     
-     utils/
-      constants.py
-        [x] SCOPES : list
-        [x] MIME_TYPES : dict
-
-      log_utils.py
-        [x] report - report with message and level. optionally print
-        [x] logging_config - configure global logging for app
-
-      text_utils.py
-        [x] remove_diacritics
-        [x] cannon - canonicalize a filename or text string for matching
-
-projects\
-  cacciamani-request\
-    src\
-      file_transforms.py
-        [x] combine_pdfs - merge pdfs
-        [x] remove_pages - remove pages from pdf
-
----
-
-## 🧭 Notes
-
-- `src/google-access/io/` holds low-level Google API integration (Drive, Auth).
-- `src/utils/` contains reusable building blocks (logging, text, constants).
-- `src/ingest/` is for pulling or downloading content.
-- `src/transform/` is reserved for data transformations and normalization.
-- `projects/cacciamani-request/` contains domain-specific operations.
+projects/member-data-consolidation/
+  notebooks/
+    01_build_member_master.ipynb    # notebook for creating master
+  src/
+    pipeline.py                     # loads sheets → transforms → CSV/DB export
 
 ---
 
 ## 🚧 Next Steps
 
-- [ ] Implement `download_item` in `ingest.py`  
-- [ ] Add first transform under `transform/` (metadata normalization)  
-- [ ] Write smoke tests for `get_folder_items` and `combine_pdfs`  
-- [ ] Add automated CODEMAP summary generator to `tools/`  
-- [ ] Add project-level README with high-level flow diagram  
+- [ ] Implement `download_item` in `ingest.py`
+- [ ] Add first transform under `transform/` (metadata normalization)
+- [ ] Write smoke tests for `get_folder_items` and `combine_pdfs`
+- [ ] Add automated CODEMAP summary generator to `tools/`
+- [ ] Add project-level README with high-level flow diagram
 
 ---
 
