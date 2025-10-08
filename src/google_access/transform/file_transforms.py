@@ -4,7 +4,7 @@ from typing import Iterable, Callable, Optional, Sequence
 from PyPDF2 import PdfMerger, PdfReader, PdfWriter
 from PyPDF2.errors import PdfReadError
 
-from google_access.utils.log_utils import report
+from google_access import report
 
 # to do: change report() -> report() and make changes suggested by coach
 
