@@ -10,8 +10,15 @@ from . import constants
 from . import transforms
 
 # Optional: promote specific frequently used items
-from .constants import SCOPES, MIME_TYPES
+from .constants import SCOPES, MIME_TYPES, SERVICE_ACCOUNT_ENV_VAR_NAME, get_service_account_path
 from .utils import report
 
+constant_list = ["SCOPES",
+             "MIME_TYPES",
+             "SERVICE_ACCOUNT_ENV_VAR_NAME",
+             "get_service_account_path"
+             ]
+
 __all__ = ["io", "utils", "constants", "transforms",
-           "report", "SCOPES", "MIME_TYPES"]
+           "report"] + constant_list
+

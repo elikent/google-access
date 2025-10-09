@@ -13,7 +13,9 @@ artifacts/
 
 # Secrets
 /configs/secrets/
+/configs/.secrets/
 **/secrets/
+**/.secrets/
 !configs/app/*.json   # allow safe JSON configs if you use them
 
 # Test scripts
