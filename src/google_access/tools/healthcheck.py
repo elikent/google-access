@@ -14,7 +14,7 @@ from google_access import get_service_account_path
 def check_service_account_path():
     ok = get_service_account_path().exists()
     if ok:
-        msg = 'Aervice account key found'
+        msg = 'Service account key found'
         report(msg, verbose=True)
         return ok
     else:

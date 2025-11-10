@@ -33,13 +33,6 @@ src/google_access
     [ ] convert_jpg_to_pdf  # convert jpg to pdf
 
  utils/                     # helper functions
-   log_utils.py
-    [x] report              # report with message and level, optionally print
-    [x] logging_config      # configure global logging for app
-
-  text_utils.py
-    [x] remove_diacritics
-    [x] cannon              # canonicalize a filename or text string for matching
 
 constants.py                # common constants
   [x] SCOPES : list
