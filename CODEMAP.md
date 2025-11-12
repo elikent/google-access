@@ -27,10 +27,6 @@ src/google_access
     [x] get_folder_items    # returns a list of dicts of folder_item: metadata
 
  transform/                 # pure transforms (no I/O)
-    file_transforms.py
-    [x] combine_pdfs        # combine multiple pdfs into one
-    [x] remove_pages        # remove pages from pdf
-    [ ] convert_jpg_to_pdf  # convert jpg to pdf
 
  utils/                     # helper functions
 
